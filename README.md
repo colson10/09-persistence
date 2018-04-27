@@ -1,29 +1,12 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 09: Vanilla REST API w/ Persistence
-======
+# Lab 09 - Persistence
+**Author**: Carl Olson
+**Version**: 1.0.0 
 
-## Submission Instructions
-  * fork this repository & create a new branch for your work
-  * push to your repository
-  * submit a pull request to this repository
-  * submit a link to your PR in canvas
-  * write a question and observation on canvas
+## Overview
+This lab focused on refactoring our previous vanilla rest api lab and going a step further with persistence and saving data to a file system. 
 
-## Learning Objectives  
-* students will learn how to save resource data to the file system for a layer of data persistence
-* students will learn how to refactor commonly used coding constructs into custom helper modules
+## Getting Started
+Install Dependencies, used nodemon to start the server. 
 
-## Requirements
-
-#### Configuration
-* Reference the file structure of [this template](https://github.com/codefellows/seattle-javascript-401d23/tree/master/back-end/00-empty-template) for the configuration files you need and folder structure
-* `README.md`
-  * your `README.md` should include detailed instructions on how to use your API
-  * this should include documentation on how to access your API endpoints
-
-#### Feature Tasks
-* continue working on your vanilla REST API
-* refactor your routes to be contained in a separate module (ex: `route/resource-route.js`)
-* refactor your `res` messages & status codes to be contained in a separate module (ex: `response.js`)
-* refactor the `storage.js` module to use file system persistence
-  * use the `fs` module to create and read the associated data files
-  * the name of the file should contain the related resource id
+## Architecture
+JavaScript, Node, Babel, ESLint, Jest, winston, dotenv, superagent, logger, nodemon, uuid, bluebird, fs.

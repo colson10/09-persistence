@@ -27,7 +27,6 @@ module.exports = function routeRestaurant(router) {
   // GET one restaurant
   router.get('/api/v1/restaurant', (req, res) => {
     logger.log(logger.INFO, `RESTAURANT ROUTE: GET /api/v1/restaurant - ${JSON.stringify(res.body)}`);
-
     if (!req.url.query.id) {
       response.sendText(res, 404, 'Your request requires an id');
       return undefined;

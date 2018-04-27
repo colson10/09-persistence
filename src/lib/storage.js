@@ -15,9 +15,7 @@ storage.create = function create(schema, item) {
   if (!item) return Promise.reject(new Error('Cannot create a new item, item required'));
 
   const json = JSON.stringify(item);
-  // console.log(item, schema);
-  // console.log(__dirname);
-  return fs.writeFileProm(`${__dirname}/../data/${schema}/${item.id}.json`, json)
+  return fs.writeFileProm(`${__dirname}/../data/${schema}/${item.id}.json`, json)    
     .then(() => {
       logger.log(logger.INFO, 'STORAGE: Created a new resource');
       return item;
@@ -46,12 +44,10 @@ storage.fetchOne = function fetchOne(schema, id) {
 storage.fetchAll = function fetchAll(schema) {
   if (!schema) return Promise.reject(new Error('No restaurants in schema'));
 
-  return fs.readFileProm(`${__dirname}/..data/${schema}.json`)
+  return fs.readdirProm(`${__dirname}/..data/${schema}`)
     .then((data) => {
       try {
         const items = JSON.parse(data.toString());
-        // const allItems = Object.values(memory[schema]);
-        // const restaurants = allItems.map(rest => rest.id);
         return items;
       } catch (err) {
         return Promise.reject(err);
@@ -64,22 +60,22 @@ storage.fetchAll = function fetchAll(schema) {
 
 storage.update = function update(schema, item) {
   logger.log(logger.INFO, 'Updating restaurant');
-  return new Promise((resolve, reject) => {
-    if (!item) return reject(new Error('Cannot update item, item required'));
-
-    memory[schema][item.id] = item;
-    return resolve(item);
-  });
+  if (!item) return Promise.reject(new Error('Cannot update item, item required'));
+    
+  const json = JSON.stringify(item);
+  return fs.writeFileProm(`${__dirname}/../data/${schema}/${item.id}.json`, json)    
+    .then(() => {
+      logger.log(logger.INFO, 'STORAGE: Created a new resource');
+      return item;
+    })
+    .catch(err => Promise.reject(err));
 };
 
-storage.delete = function del(schema, id) {
-  return new Promise((resolve, reject) => {
-    if (!schema || !id) return reject(new Error('No restaurant to delete.'));
-    const item = memory[schema][id];
-    delete memory[schema];
-    if (!item) {
-      return reject(new Error('item not found'));
-    }
-    return resolve(item);
-  });
+storage.delete = function del(schema, item) {
+  if (!schema || !item) return Promise.reject(new Error('No restaurant to delete.'));
+  return fs.unlinkProm(`${__dirname}/../data/${schema}/${item}.json`)
+    .then(() => {
+      logger.log(logger.INFO, 'DELETE: Restaurant deleted');
+    })
+    .catch(err => Promise.reject(err));
 };
